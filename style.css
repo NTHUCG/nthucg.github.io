@@ -184,3 +184,20 @@ main{flex:1}
 @media(hover:hover) and (pointer:fine){
  .page-navigation a,.light-accent{cursor:url('assets/guard-rifle-cursor.svg?v=3') 6 8,auto}
 }
+/* Native expandable questions work without JavaScript. */
+.qa-page{max-width:1050px}
+.qa-list{display:grid;gap:14px;margin:30px 0}
+.qa-item{background:#ffffff85;border:1px solid #ffffffc9;border-radius:14px;overflow:hidden}
+.qa-item summary{display:flex;align-items:center;justify-content:space-between;gap:18px;list-style:none;padding:20px 22px;font-size:16px;font-weight:600;line-height:1.7;cursor:pointer}
+.qa-item summary::-webkit-details-marker{display:none}
+.qa-item summary:after{content:'+';font-size:23px;font-weight:400;color:var(--accent)}
+.qa-item[open] summary:after{content:'−'}
+.qa-item summary:focus-visible{outline:3px solid #8973aa;outline-offset:-4px;border-radius:14px}
+.qa-item[open] summary{color:var(--accent)}
+.qa-answer{padding:0 22px 20px}
+.qa-answer p,.qa-contact{font-size:14px;line-height:2;color:var(--muted);margin:0}
+.qa-answer a,.qa-contact a{color:var(--accent);text-decoration:underline;text-underline-offset:4px;overflow-wrap:anywhere}
+.qa-contact{margin-top:25px}
+@media(hover:hover) and (pointer:fine){.qa-item summary{cursor:url('assets/guard-flag-cursor.svg') 6 4,pointer}}
+@media(max-width:600px){.qa-item summary{padding:17px;font-size:15px}.qa-answer{padding:0 17px 17px}.qa-list{margin-top:22px}}
+@media(max-width:380px){.page-navigation a:last-child{grid-column:1/-1}}

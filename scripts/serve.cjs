@@ -9,7 +9,7 @@ http.createServer((req,res) => {
   const file = path.resolve(root, '.' + (pathname === '/' ? '/index.html' : pathname));
   if (!file.startsWith(root + path.sep)) { res.writeHead(403).end(); return; }
   const relative = path.relative(root, file).replaceAll(path.sep, '/');
-  if (!['index.html', 'coaches.html', 'team.html', 'performances.html', 'style.css', 'script.js', 'mark.svg'].includes(relative) && !relative.startsWith('assets/')) { res.writeHead(404).end(); return; }
+  if (!['index.html', 'coaches.html', 'team.html', 'performances.html', 'qa.html', 'style.css', 'script.js', 'mark.svg'].includes(relative) && !relative.startsWith('assets/')) { res.writeHead(404).end(); return; }
   fs.readFile(file, (error, data) => {
     if (error) { res.writeHead(404).end('Not found'); return; }
     res.writeHead(200, {'Content-Type':types[path.extname(file)] || 'application/octet-stream','Cache-Control':'no-store','Referrer-Policy':'strict-origin-when-cross-origin'});
