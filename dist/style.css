@@ -110,3 +110,9 @@ footer{background:#f1f3fd}
 .performance-notes p{font-size:12px;line-height:1.8;color:var(--muted);margin:0}
 @media(max-width:800px){.performance-layout{gap:24px;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}}
 @media(max-width:600px){.performance-layout{grid-template-columns:1fr;gap:24px}.performance-notes article{padding:14px 0}.performance-notes h3{font-size:18px}}
+
+/* One continuous practice-space backdrop spans both main sections. */
+main{position:relative;isolation:isolate;background:linear-gradient(110deg,#edf4ffeb,#eee7fbdb),url('assets/practice-space.png') center 70% / cover no-repeat}
+.intro{background:transparent}
+.movement{background:transparent}
+@media(max-width:600px){.intro{background:transparent}main{background-position:center,center 75%}}
