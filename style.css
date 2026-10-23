@@ -140,3 +140,14 @@ main{flex:1}
 .archive-caption a{font-size:12px;color:var(--accent)}
 .archive-caption a:hover{text-decoration:underline}
 @media(max-width:600px){.archive-grid{grid-template-columns:1fr;gap:22px}.archive-heading h2{font-size:24px}.archive-heading time{font-size:12px}.archive-card{padding:8px}.archive-caption{padding:12px 4px 5px}}
+/* Compact archive thumbnails with three columns on desktop. */
+.archive-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 18px}
+.archive-card{padding:7px;border-radius:13px}
+.archive-card .video-frame{aspect-ratio:16/9;min-height:0;border-radius:8px}
+.archive-caption{padding:11px 4px 4px;gap:10px}
+.archive-caption h3{font-size:14px}
+.archive-caption a{font-size:11px;white-space:nowrap}
+.performance-archive{margin:25px 0 30px}
+.archive-heading{padding-bottom:12px;margin-bottom:18px}
+@media(max-width:959px){.archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.archive-grid{grid-template-columns:1fr;gap:18px}.archive-card .video-frame{min-height:200px}}
