@@ -49,3 +49,60 @@ document.addEventListener('visibilitychange', () => {
 });
 window.addEventListener('focus', () => requestAnimationFrame(restoreHomeEffects));
 restoreHomeEffects();
+
+// Progressive year tabs: all records remain readable without JavaScript.
+const yearTabs = document.querySelector('.year-tabs');
+if (yearTabs) {
+  const panels = Array.from(document.querySelectorAll('.performance-archive'));
+  const buttons = panels.map((panel) => {
+    const heading = panel.querySelector('h2');
+    const year = heading.textContent.trim();
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.id = `year-tab-${year}`;
+    button.textContent = year;
+    button.setAttribute('role', 'tab');
+    panel.id = `year-panel-${year}`;
+    panel.setAttribute('role', 'tabpanel');
+    panel.setAttribute('aria-labelledby', button.id);
+    panel.tabIndex = 0;
+    button.setAttribute('aria-controls', panel.id);
+    button.dataset.year = year;
+    yearTabs.append(button);
+    return button;
+  });
+  function selectYear(index, updateAddress = false) {
+    panels.forEach((panel, i) => {
+      const selected = i === index;
+      panel.hidden = !selected;
+      buttons[i].setAttribute('aria-selected', String(selected));
+      buttons[i].tabIndex = selected ? 0 : -1;
+      if (!selected) panel.querySelectorAll('iframe').forEach((player) => {
+        if (player._preview) player.replaceWith(player._preview);
+      });
+    });
+    if (updateAddress) history.replaceState(null, '', `#archive-${buttons[index].dataset.year}`);
+  }
+  function selectFromAddress() {
+    const year = location.hash.replace('#archive-', '');
+    const index = buttons.findIndex(button => button.dataset.year === year);
+    selectYear(index >= 0 ? index : 0);
+  }
+  buttons.forEach((button, index) => {
+    button.addEventListener('click', () => selectYear(index, true));
+    button.addEventListener('keydown', (event) => {
+      let next;
+      if (event.key === 'ArrowRight') next = (index + 1) % buttons.length;
+      else if (event.key === 'ArrowLeft') next = (index - 1 + buttons.length) % buttons.length;
+      else if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = buttons.length - 1;
+      else return;
+      event.preventDefault();
+      selectYear(next, true);
+      buttons[next].focus();
+    });
+  });
+  selectFromAddress();
+  yearTabs.hidden = false;
+  window.addEventListener('hashchange', selectFromAddress);
+}

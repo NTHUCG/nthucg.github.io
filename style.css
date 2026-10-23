@@ -201,3 +201,14 @@ main{flex:1}
 @media(hover:hover) and (pointer:fine){.qa-item summary{cursor:url('assets/guard-flag-cursor.svg') 6 4,pointer}}
 @media(max-width:600px){.qa-item summary{padding:17px;font-size:15px}.qa-answer{padding:0 17px 17px}.qa-list{margin-top:22px}}
 @media(max-width:380px){.page-navigation a:last-child{grid-column:1/-1}}
+
+
+/* Compact year navigation, horizontally scrollable on small screens. */
+.year-tabs{display:flex;gap:9px;overflow-x:auto;padding:5px 2px 12px;margin:26px 0 10px;scrollbar-width:thin;scrollbar-color:#b5a5ca transparent}
+.year-tabs[hidden],.performance-archive[hidden]{display:none}
+.year-tabs button{flex:0 0 auto;min-width:72px;min-height:44px;padding:9px 18px;border:1px solid #c4c9dd;border-radius:24px;background:#ffffff80;color:var(--ink);font:inherit;font-size:14px;cursor:pointer}
+.year-tabs button[aria-selected=true]{background:var(--accent);border-color:var(--accent);color:white;box-shadow:0 4px 14px #61508020}
+.year-tabs button:hover:not([aria-selected=true]){background:#fff}
+.performance-archive[role=tabpanel]{outline-offset:6px}
+@media(hover:hover) and (pointer:fine){.year-tabs button{cursor:url('assets/guard-flag-cursor.svg') 6 4,pointer}}
+@media(max-width:600px){.year-tabs{gap:7px;margin-top:22px}.year-tabs button{min-width:65px;padding:9px 15px}}
