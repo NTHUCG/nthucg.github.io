@@ -40,3 +40,6 @@ body{min-height:100vh;min-height:100svh;display:flex;flex-direction:column}
 main{flex:1}
 .intro{padding-bottom:18px}
 @media(max-width:600px){.intro{padding-bottom:16px}}
+/* Keep the performance description directly beneath its heading. */
+.section-heading{display:block}
+.section-heading>p{max-width:none;margin:12px 0 0}
