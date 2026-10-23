@@ -212,3 +212,15 @@ main{flex:1}
 .performance-archive[role=tabpanel]{outline-offset:6px}
 @media(hover:hover) and (pointer:fine){.year-tabs button{cursor:url('assets/guard-flag-cursor.svg') 6 4,pointer}}
 @media(max-width:600px){.year-tabs{gap:7px;margin-top:22px}.year-tabs button{min-width:65px;padding:9px 15px}}
+
+
+/* A photo-inspired mascot, distinct from the coach information. */
+.mascot-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:7%;margin:32px 0;padding:35px 7%;background:linear-gradient(130deg,#ffffffb0,#e6dff6b0);border:1px solid #ffffffc9;border-radius:24px;overflow:hidden}
+.mascot-art{position:relative;padding-top:44px;max-width:360px;justify-self:center;width:100%}
+.mascot-art img{display:block;width:100%;height:auto;filter:drop-shadow(0 10px 12px #59608018)}
+.mascot-bubble{position:absolute;top:0;left:10px;z-index:1;background:#fff;color:#5d7194;border:2px solid #c1b2d6;border-radius:18px 18px 18px 3px;padding:12px 22px;font-weight:700;font-size:24px;transform:rotate(-5deg)}
+.mascot-copy h2{font-size:clamp(28px,3.6vw,43px);margin:15px 0}
+.mascot-copy p:not(.eyebrow){font-size:15px;line-height:1.9;color:var(--muted)}
+.mascot-copy .mascot-quote{font-size:25px!important;color:var(--accent)!important;font-weight:600}
+.mascot-copy .mascot-note{font-size:12px!important;margin-top:25px}
+@media(max-width:600px){.mascot-card{grid-template-columns:1fr;padding:26px 7%;gap:20px}.mascot-art{max-width:265px}.mascot-bubble{font-size:20px;padding:9px 17px}.mascot-copy{text-align:center}.mascot-copy h2{font-size:30px}.mascot-copy .mascot-note{margin-top:15px}}
