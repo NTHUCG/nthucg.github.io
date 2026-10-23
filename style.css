@@ -43,3 +43,5 @@ main{flex:1}
 /* Keep the performance description directly beneath its heading. */
 .section-heading{display:block}
 .section-heading>p{max-width:none;margin:12px 0 0}
+.mobile-comma-break{display:none}
+@media(max-width:600px){.section-heading .mobile-comma-break{display:block}}
