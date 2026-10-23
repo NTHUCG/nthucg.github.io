@@ -66,3 +66,6 @@ main{flex:1}
 .wind-letter:nth-child(2){animation-delay:-.65s}
 @keyframes wind-ripple{0%,100%{transform:translateY(0) rotate(-1deg) skewY(0)}25%{transform:translateY(-3px) rotate(1deg) skewY(-2deg)}50%{transform:translateY(0) rotate(1.5deg) skewY(1deg)}75%{transform:translateY(3px) rotate(-1deg) skewY(2deg)}}
 @media(prefers-reduced-motion:reduce){.wind-letter{animation:none!important;will-change:auto}}
+/* Slightly smaller performance title, sized to fit common mobile widths. */
+.section-heading h2{font-size:clamp(25px,2.5vw,33px)}
+@media(max-width:600px){.section-heading h2{font-size:clamp(19px,5.4vw,27px);letter-spacing:-.5px;line-height:1.6}.section-heading h2 .light-accent{padding:0 .02em}}
