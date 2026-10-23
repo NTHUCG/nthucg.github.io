@@ -173,3 +173,14 @@ main{flex:1}
 
 .archive-event{font-size:17px;font-weight:600;margin:26px 0 14px;line-height:1.6}
 .archive-note{font-size:13px;line-height:1.9;color:var(--muted);margin:-5px 0 18px}
+
+
+
+/* Keep the rifle on ordinary content; show a flag on clickable targets. */
+@media(hover:hover) and (pointer:fine){
+ a,button,[role=button],summary,.video-preview,.light-accent{cursor:url('assets/guard-flag-cursor.svg') 6 4,pointer}
+}
+/* Keep the rifle over the four navigation links and the glowing character. */
+@media(hover:hover) and (pointer:fine){
+ .page-navigation a,.light-accent{cursor:url('assets/guard-rifle-cursor.svg?v=3') 6 8,auto}
+}
