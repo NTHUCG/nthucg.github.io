@@ -45,3 +45,24 @@ main{flex:1}
 .section-heading>p{max-width:none;margin:12px 0 0}
 .mobile-comma-break{display:none}
 @media(max-width:600px){.section-heading .mobile-comma-break{display:block}}
+.light-accent{color:var(--accent)}
+
+/* A quiet glow and sweeping underline accent the word light. */
+.light-accent{position:relative;display:inline-block;color:#705785;background:linear-gradient(135deg,#62508d 15%,#9273ac 55%,#9a6c32 100%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 22px #b99cde48;padding:0 .08em;isolation:isolate}
+.light-accent:before{content:'';position:absolute;inset:5% -12%;background:radial-gradient(ellipse,#e1c6f17a,transparent 70%);z-index:-1;pointer-events:none}
+.light-accent:after{content:'';position:absolute;left:0;right:-6%;bottom:2%;height:.16em;border-bottom:2px solid #b799ca;border-radius:50%;transform:rotate(-12deg);pointer-events:none}
+/* A gentle breeze passes around the two characters without moving the heading layout. */
+.breeze-word{position:relative;display:inline-block;isolation:isolate;animation:breeze-sway 6s ease-in-out infinite;transform-origin:50% 80%}
+.breeze-lines{position:absolute;width:125%;height:100%;left:-12%;top:7%;overflow:visible;z-index:-1;pointer-events:none;color:#a5b9d3}
+.breeze-lines path{stroke:currentColor;stroke-width:1.5;stroke-linecap:round;opacity:.7;stroke-dasharray:135 60;animation:breeze-flow 7s linear infinite}
+.breeze-lines path:nth-child(2){animation-delay:-2s;opacity:.5}
+.breeze-lines path:nth-child(3){animation-delay:-4s;opacity:.4}
+@keyframes breeze-sway{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-2px) rotate(-1deg)}}
+@keyframes breeze-flow{from{stroke-dashoffset:195}to{stroke-dashoffset:0}}
+@media(prefers-reduced-motion:reduce){.breeze-word,.breeze-lines path{animation:none!important}}
+/* Staggered character motion follows the rhythm of a flag in the breeze. */
+.breeze-word{animation:none}
+.wind-letter{display:inline-block;transform-origin:50% 75%;animation:wind-ripple 4.8s ease-in-out infinite;will-change:transform}
+.wind-letter:nth-child(2){animation-delay:-.65s}
+@keyframes wind-ripple{0%,100%{transform:translateY(0) rotate(-1deg) skewY(0)}25%{transform:translateY(-3px) rotate(1deg) skewY(-2deg)}50%{transform:translateY(0) rotate(1.5deg) skewY(1deg)}75%{transform:translateY(3px) rotate(-1deg) skewY(2deg)}}
+@media(prefers-reduced-motion:reduce){.wind-letter{animation:none!important;will-change:auto}}
