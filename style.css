@@ -69,3 +69,43 @@ main{flex:1}
 /* Slightly smaller performance title, sized to fit common mobile widths. */
 .section-heading h2{font-size:clamp(25px,2.5vw,33px)}
 @media(max-width:600px){.section-heading h2{font-size:clamp(19px,5.4vw,27px);letter-spacing:-.5px;line-height:1.6}.section-heading h2 .light-accent{padding:0 .02em}}
+/* Real class photography anchors the introduction, with an Instagram strip below. */
+.intro{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:6%;row-gap:14px}
+.intro-copy{grid-column:1;grid-row:1/3;align-self:center}
+.intro-class-photo{grid-column:2;grid-row:1;margin:0;min-width:0}
+.intro-class-photo img{display:block;width:100%;height:auto;border-radius:16px;border:3px solid #ffffffa6;box-shadow:0 12px 35px #34456312}
+.intro-class-photo figcaption{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:8px;font-size:10px;line-height:1.8;color:var(--muted)}
+.intro-class-photo figcaption span{font-size:9px;letter-spacing:.7px}
+.intro-instagram{grid-column:2;grid-row:2;max-width:none;justify-self:stretch;padding:10px 14px;border-radius:12px;gap:12px}
+.intro-ig-mark{width:40px;height:42px;font-size:27px;border-radius:8px}
+.intro-instagram .eyebrow{display:none}
+.intro-instagram strong{font-size:14px}
+.intro-instagram p{font-size:11px;margin-top:3px}
+.movement{grid-row:3;margin-top:12px}
+@media(max-width:800px){.intro{column-gap:4%}.intro-copy h1{font-size:clamp(34px,4.5vw,40px)}.intro-class-photo figcaption span{font-size:8px}}
+@media(max-width:600px){.intro{grid-template-columns:1fr;row-gap:16px}.intro-copy{grid-column:1;grid-row:1}.intro-class-photo{grid-column:1;grid-row:2;margin-top:6px}.intro-instagram{grid-column:1;grid-row:3;width:100%;max-width:none}.movement{grid-column:1;grid-row:4;margin-top:8px}.intro-copy h1{font-size:40px}.intro-class-photo img{border-radius:12px}}
+/* Place Instagram beneath the introduction on the left. */
+.intro-copy{grid-column:1;grid-row:1}
+.intro-instagram{grid-column:1;grid-row:2;justify-self:start;width:100%;max-width:395px}
+.intro-class-photo{grid-column:2;grid-row:1/3;align-self:center}
+@media(max-width:600px){.intro-copy{grid-column:1;grid-row:1}.intro-instagram{grid-column:1;grid-row:2;max-width:none}.intro-class-photo{grid-column:1;grid-row:3}.movement{grid-column:1;grid-row:4}}
+/* Shared navigation and dedicated people pages. */
+.page-navigation{display:flex;align-items:center;gap:24px}
+.page-navigation a{font-size:13px;white-space:nowrap;padding:9px 0;border-bottom:2px solid transparent}
+.page-navigation a:hover,.page-navigation a[aria-current=page]{color:var(--accent);border-bottom-color:var(--accent)}
+.people-page{padding-top:42px;padding-bottom:46px}
+.people-page h1{font-size:clamp(36px,5vw,58px);margin:15px 0}
+.people-intro{font-size:15px;line-height:1.9;color:var(--muted)}
+.people-empty{margin:32px 0;padding:40px 25px;background:#ffffff85;border:1px solid #ffffffc7;border-radius:18px;text-align:center}
+.people-symbol{font-size:45px;color:#9a88b7}
+.people-empty h2{font-family:inherit;font-size:23px;margin:12px 0}
+.people-empty p{font-size:14px;line-height:1.9;color:var(--muted)}
+.people-empty a,.back-home{display:inline-block;font-size:13px;color:var(--accent);margin-top:15px;text-decoration:underline;text-underline-offset:5px}
+@media(max-width:600px){.header{flex-wrap:wrap;gap:4px}.page-navigation{display:flex;position:static;background:transparent;border:0;box-shadow:none;border-radius:0;width:100%;justify-content:center;gap:30px;padding:6px 0 0}.page-navigation a{font-size:13px}.people-page{padding-top:25px}.people-empty{padding:30px 18px}.people-empty h2{font-size:21px}}
+/* A smaller photo print gives the class image a personal, editorial feel. */
+.intro-class-photo{width:90%;max-width:470px;justify-self:center;position:relative;padding:10px 10px 12px;background:#fafbffe8;border:1px solid #ffffff;border-radius:8px;box-shadow:0 12px 30px #39466515;transform:rotate(1.3deg)}
+.intro-class-photo:before{content:'';position:absolute;top:-10px;left:38%;width:26%;height:23px;background:#c8badb9e;border:1px solid #e4dbef80;transform:rotate(-5deg);z-index:1;pointer-events:none}
+.intro-class-photo img{border:0;border-radius:3px;box-shadow:none}
+.intro-class-photo figcaption{padding:2px 4px 0;margin-top:10px;gap:6px;font-size:10px}
+.intro-class-photo figcaption span{font-size:8px;letter-spacing:.5px}
+@media(max-width:600px){.intro-class-photo{width:92%;max-width:380px;justify-self:center;margin-top:10px;padding:9px 9px 11px;transform:rotate(1deg)}.intro-class-photo img{border-radius:3px}.intro-class-photo figcaption{font-size:10px}}
