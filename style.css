@@ -151,3 +151,16 @@ main{flex:1}
 .archive-heading{padding-bottom:12px;margin-bottom:18px}
 @media(max-width:959px){.archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.archive-grid{grid-template-columns:1fr;gap:18px}.archive-card .video-frame{min-height:200px}}
+/* Lightweight video facades; the YouTube player loads on demand. */
+.video-preview{position:relative;display:block;width:100%;height:100%;padding:0;border:0;background:#222b3c;color:white;cursor:pointer;overflow:hidden}
+.video-preview img{display:block;width:100%;height:100%;object-fit:cover;aspect-ratio:16/9}
+.video-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:58px;height:42px;border-radius:12px;background:#282331d9;font-size:22px;padding-left:3px;box-shadow:0 3px 15px #0003}
+.video-preview:hover .video-play,.video-preview:focus-visible .video-play{background:#715a95}
+.video-preview-label{position:absolute;bottom:10px;right:10px;font-size:11px;background:#141c2bd9;padding:5px 9px;border-radius:5px}
+/* The word glows gold while the pointer rests on it. */
+.light-accent{transition:filter .2s ease,text-shadow .2s ease}
+@media(hover:hover){
+ .light-accent:hover{color:#e5a900;background:none;-webkit-text-fill-color:#e5a900;text-shadow:0 0 8px #ffd95c99,0 0 22px #ffc40066;filter:brightness(1.08)}
+ .light-accent:hover:before{background:radial-gradient(ellipse,#ffe77e99,transparent 72%)}
+ .light-accent:hover:after{border-bottom-color:#e9b525}
+}
