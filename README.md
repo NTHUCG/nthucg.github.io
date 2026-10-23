@@ -8,7 +8,3 @@
 - assets/：隊徽及場地照片
 - mark.svg：網站小圖示
 - scripts/serve.cjs：本機預覽工具
-
-本機預覽：在專案資料夾執行 `node scripts/serve.cjs`，開啟 http://127.0.0.1:4173/ 。
-
-GitHub Pages：Settings → Pages → Deploy from a branch，選擇實際推送的分支與 /(root)。提交並推送所有變更後，從 https://nthucg.github.io/ 進入。
