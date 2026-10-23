@@ -109,3 +109,21 @@ main{flex:1}
 .intro-class-photo figcaption{padding:2px 4px 0;margin-top:10px;gap:6px;font-size:10px}
 .intro-class-photo figcaption span{font-size:8px;letter-spacing:.5px}
 @media(max-width:600px){.intro-class-photo{width:92%;max-width:380px;justify-self:center;margin-top:10px;padding:9px 9px 11px;transform:rotate(1deg)}.intro-class-photo img{border-radius:3px}.intro-class-photo figcaption{font-size:10px}}
+.intro-class-photo{transform:translateY(14px) rotate(1.3deg)}
+@media(max-width:600px){.intro-class-photo{transform:translateY(8px) rotate(1deg);margin-bottom:8px}}
+/* Mobile follows a simple content flow: introduction, Instagram, photo, video. */
+@media(max-width:600px){
+ .intro{display:flex;flex-direction:column;align-items:stretch;gap:22px}
+ .intro-copy{order:0;min-width:0}
+ .intro-instagram{order:1;align-self:center;width:100%;max-width:395px;margin:0}
+ .intro-class-photo{order:2;align-self:center;width:92%;max-width:380px;margin:10px 0 8px;transform:rotate(1deg)}
+ .movement{order:3;min-width:0;width:100%;margin-top:4px}
+ .header{width:100%}
+}
+/* A small color guard practice rifle replaces the pointer on desktop. */
+@media(hover:hover) and (pointer:fine){
+ html,body,a,button,[role=button]{cursor:url('assets/guard-rifle-cursor.svg?v=3') 6 8,auto}
+}
+/* Allow the four-page navigation to fit smaller screens naturally. */
+.page-navigation{flex-wrap:wrap;justify-content:flex-end;column-gap:22px;row-gap:3px}
+@media(max-width:600px){.page-navigation{justify-content:center;column-gap:18px;row-gap:2px}.page-navigation a{font-size:12px;padding:8px 0}}
