@@ -16,5 +16,11 @@
 
 ## 更新網站
 
-修改 CSS 或 JS 後，更新 HTML 內資源連結的 `v` 版本號以避免舊快取。
+修改後執行 `node scripts/update-asset-versions.cjs`，自動更新各頁的 CSS／JS 版本號，避免舊快取。
 提交並推送所有相關變更。GitHub Pages 使用實際推送分支及 `/(root)`。
+
+## 發布前檢查
+
+執行 `node --check script.js` 及 `node scripts/check-site.cjs`，確認語法、連結、圖片、影片代碼與快取版本。
+
+落葉效果使用單一 Canvas：桌面 8 片、觸控裝置 3 片；減少動態效果開啟時停用，切到背景或載入影片時暫停。圖片使用 WebP 與響應式尺寸，原始圖檔保留作為素材備份。
