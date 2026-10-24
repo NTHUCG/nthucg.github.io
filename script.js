@@ -238,7 +238,7 @@ return () => {};
   const normalize = pathname => pathname.endsWith('/') ? `${pathname}index.html` : pathname;
   const pages = [...document.querySelectorAll('.page-navigation a')].map(link => normalize(new URL(link.href).pathname));
   let currentPath = normalize(location.pathname);
-  let pending, transition;
+  let pending;
   async function navigate(url, fromHistory = false) {
     pending?.abort();
     const request = new AbortController();
@@ -249,10 +249,6 @@ return () => {};
       const next = new DOMParser().parseFromString(await response.text(), 'text/html');
       const content = next.querySelector('main');
       if (!content || request.signal.aborted) return;
-      const previousIndex = pages.indexOf(currentPath);
-      const nextIndex = pages.indexOf(normalize(url.pathname));
-      const backward = nextIndex < previousIndex;
-      document.documentElement.dataset.pageDirection = backward ? 'backward' : 'forward';
       const update = () => {
         if (request.signal.aborted) return;
         disposeYearTabs();
@@ -275,17 +271,7 @@ return () => {};
         main.tabIndex = -1;
         main.focus({ preventScroll: true });
       };
-      transition?.skipTransition();
-      if (document.startViewTransition && !motionPreference.matches) {
-        transition = document.startViewTransition(update);
-        await transition.finished;
-      } else {
-        update();
-        if (!motionPreference.matches) main.querySelector('.section')?.animate(
-          [{ opacity: 0, transform: `translateX(${backward ? -32 : 32}px)` }, { opacity: 1, transform: 'translateX(0)' }],
-          { duration: 420, easing: 'cubic-bezier(.22,1,.36,1)' }
-        );
-      }
+      update();
     } catch (error) {
       if (error.name !== 'AbortError') location.assign(url.href);
     }

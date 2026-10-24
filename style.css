@@ -217,24 +217,4 @@ main>.section{position:relative;z-index:1}
 /* Reserve scrollbar space even on browsers without scrollbar-gutter. */
 @supports not (scrollbar-gutter:stable){html{overflow-y:scroll}}
 
-/* Content-only slides keep the shared shell and background in place. */
-@view-transition{navigation:none}
-:root{--page-slide-distance:100vw}
-:root[data-page-direction=backward]{--page-slide-distance:-100vw}
-main>.section{view-transition-name:page-content}
-::view-transition{overflow:hidden;pointer-events:none}
-::view-transition-group(root){animation:none}
-::view-transition-old(root){display:none}
-::view-transition-new(root){animation:none}
-::view-transition-group(page-content){animation:none}
-::view-transition-old(page-content){animation:page-content-out 560ms cubic-bezier(.22,1,.36,1) both;mix-blend-mode:normal}
-::view-transition-new(page-content){animation:page-content-in 560ms cubic-bezier(.22,1,.36,1) both;mix-blend-mode:normal}
-@keyframes page-content-out{from{transform:translateX(0)}to{transform:translateX(calc(-1 * var(--page-slide-distance)))}}
-@keyframes page-content-in{from{transform:translateX(var(--page-slide-distance))}to{transform:translateX(0)}}
-@media(prefers-reduced-motion:reduce){
- @view-transition{navigation:none}
- main>.section{animation:none}
- ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}
-}
-
 main:focus{outline:none}
