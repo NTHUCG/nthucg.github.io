@@ -34,8 +34,8 @@ document.addEventListener('click', (event) => {
 // Cache homepage-only nodes and media queries once, rather than on every focus event.
 const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
 const hoverPreference = matchMedia('(hover: hover)');
-const animatedLetters = [...document.querySelectorAll('.wind-letter, .breeze-lines path')];
-const lightLetters = [...document.querySelectorAll('.light-accent')];
+let animatedLetters = [];
+let lightLetters = [];
 // Resume decorative motion after navigation, back/forward cache, or tab switching.
 function restoreHomeEffects() {
   if (document.visibilityState !== 'visible') return;
@@ -50,6 +50,9 @@ function restoreHomeEffects() {
     element.classList.toggle('is-lit', hoverPreference.matches && (element.matches(':hover') || element.matches(':focus')));
   });
 }
+function initializeHomeEffects() {
+  animatedLetters = [...document.querySelectorAll('.wind-letter, .breeze-lines path')];
+  lightLetters = [...document.querySelectorAll('.light-accent')];
 lightLetters.forEach((element) => {
   element.addEventListener('pointerenter', (event) => {
     if (event.pointerType !== 'touch') element.classList.add('is-lit');
@@ -59,14 +62,17 @@ lightLetters.forEach((element) => {
   element.addEventListener('blur', () => element.classList.remove('is-lit'));
   element.addEventListener('pointercancel', () => element.classList.remove('is-lit'));
 });
+  restoreHomeEffects();
+}
 window.addEventListener('pageshow', () => requestAnimationFrame(restoreHomeEffects));
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') requestAnimationFrame(restoreHomeEffects);
 });
 window.addEventListener('focus', () => requestAnimationFrame(restoreHomeEffects));
-restoreHomeEffects();
+initializeHomeEffects();
 
 // Progressive year tabs: all records remain readable without JavaScript.
+function initializeYearTabs() {
 const yearTabs = document.querySelector('.year-tabs');
 if (yearTabs) {
   const panels = Array.from(document.querySelectorAll('.performance-archive'));
@@ -119,6 +125,9 @@ if (yearTabs) {
   selectFromAddress();
   yearTabs.hidden = false;
   window.addEventListener('hashchange', selectFromAddress);
+  return () => window.removeEventListener('hashchange', selectFromAddress);
+}
+return () => {};
 }
 
 // Sparse leaves: one low-resolution canvas, at most 30 frames per second.
@@ -218,4 +227,80 @@ if (yearTabs) {
     sync();
   });
   sync();
+})();
+
+// Keep the shared shell alive: fetch local pages and replace only main content.
+(() => {
+  const main = document.querySelector('main');
+  if (!main) return;
+  let disposeYearTabs = initializeYearTabs();
+  if (!/^https?:$/.test(location.protocol)) return;
+  const normalize = pathname => pathname.endsWith('/') ? `${pathname}index.html` : pathname;
+  const pages = [...document.querySelectorAll('.page-navigation a')].map(link => normalize(new URL(link.href).pathname));
+  let currentPath = normalize(location.pathname);
+  let pending, transition;
+  async function navigate(url, fromHistory = false) {
+    pending?.abort();
+    const request = new AbortController();
+    pending = request;
+    try {
+      const response = await fetch(url.href, { signal: request.signal });
+      if (!response.ok) throw new Error('Page unavailable');
+      const next = new DOMParser().parseFromString(await response.text(), 'text/html');
+      const content = next.querySelector('main');
+      if (!content || request.signal.aborted) return;
+      const previousIndex = pages.indexOf(currentPath);
+      const nextIndex = pages.indexOf(normalize(url.pathname));
+      const backward = nextIndex < previousIndex;
+      document.documentElement.dataset.pageDirection = backward ? 'backward' : 'forward';
+      const update = () => {
+        if (request.signal.aborted) return;
+        disposeYearTabs();
+        restoreVideoPlayer();
+        const leaves = main.querySelector('.falling-leaves');
+        const nodes = [...content.childNodes].map(node => document.importNode(node, true));
+        main.replaceChildren(...(leaves ? [leaves] : []), ...nodes);
+        if (!fromHistory) history.pushState(null, '', url.href);
+        currentPath = normalize(url.pathname);
+        document.title = next.title;
+        const description = next.querySelector('meta[name=description]');
+        if (description) document.querySelector('meta[name=description]')?.setAttribute('content', description.content);
+        document.querySelectorAll('.page-navigation a').forEach(link => {
+          if (normalize(new URL(link.href).pathname) === currentPath) link.setAttribute('aria-current', 'page');
+          else link.removeAttribute('aria-current');
+        });
+        initializeHomeEffects();
+        disposeYearTabs = initializeYearTabs();
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+        main.tabIndex = -1;
+        main.focus({ preventScroll: true });
+      };
+      transition?.skipTransition();
+      if (document.startViewTransition && !motionPreference.matches) {
+        transition = document.startViewTransition(update);
+        await transition.finished;
+      } else {
+        update();
+        if (!motionPreference.matches) main.querySelector('.section')?.animate(
+          [{ opacity: 0, transform: `translateX(${backward ? -32 : 32}px)` }, { opacity: 1, transform: 'translateX(0)' }],
+          { duration: 420, easing: 'cubic-bezier(.22,1,.36,1)' }
+        );
+      }
+    } catch (error) {
+      if (error.name !== 'AbortError') location.assign(url.href);
+    }
+  }
+  document.addEventListener('click', event => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const link = event.target instanceof Element ? event.target.closest('a[href]') : null;
+    if (!link || link.target || link.hasAttribute('download')) return;
+    const url = new URL(link.href);
+    if (url.origin !== location.origin || !pages.includes(normalize(url.pathname))) return;
+    if (normalize(url.pathname) === currentPath && url.search === location.search) return;
+    event.preventDefault();
+    navigate(url);
+  });
+  window.addEventListener('popstate', () => {
+    if (normalize(location.pathname) !== currentPath) navigate(new URL(location.href), true);
+  });
 })();
